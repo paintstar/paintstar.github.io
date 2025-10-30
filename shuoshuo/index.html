@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>吐槽 | Feixin's Blog</title><meta name="author" content="Feixin"><meta name="copyright" content="Feixin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="暂停时间本是神技，但记录生活让我们习得了神的技能">
+<meta property="og:type" content="website">
+<meta property="og:title" content="吐槽">
+<meta property="og:url" content="https://paintstar.github.io/blog/shuoshuo/index.html">
+<meta property="og:site_name" content="Feixin&#39;s Blog">
+<meta property="og:description" content="暂停时间本是神技，但记录生活让我们习得了神的技能">
+<meta property="og:locale">
+<meta property="og:image" content="https://avatars.githubusercontent.com/u/106674847?v=4">
+<meta property="article:published_time" content="2025-10-29T13:01:49.000Z">
+<meta property="article:modified_time" content="2025-10-30T03:48:35.693Z">
+<meta property="article:author" content="Feixin">
+<meta property="article:tag" content="Feixin, Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://avatars.githubusercontent.com/u/106674847?v=4"><script type="application/ld+json"></script><link rel="shortcut icon" href="/blog/img/favicon.png"><link rel="canonical" href="https://paintstar.github.io/blog/shuoshuo/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '吐槽',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'shuoshuo'
+}</script><meta name="generator" content="Hexo 8.1.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://avatars.githubusercontent.com/u/106674847?v=4" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">2</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/blog/shuoshuo"><i class="fa-fw fas fa-comment"></i><span> 吐槽</span></a></div><div class="menus_item"><a class="site-page" href="/blog/gallery"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div></div></div><div class="page type-shuoshuo" id="body-wrap"><header class="not-home-page fixed" id="page-header" style="background-image: url(/blog/images/vvn.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">Feixin's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/blog/shuoshuo"><i class="fa-fw fas fa-comment"></i><span> 吐槽</span></a></div><div class="menus_item"><a class="site-page" href="/blog/gallery"><i class="fa-fw fas fa-images"></i><span> 图库</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">吐槽</h1></div></header><main class="layout" id="content-inner"><div class="nc" id="page"><div id="article-container"><script type="application/json" id="shuoshuo-data">[{"date":"2025-10-31 23:33:26","key":"key-1","content":"\u003ch3 id=\"小店新开\"\u003e\u003ca href=\"#小店新开\" class=\"headerlink\" title=\"小店新开~\"\u003e\u003c/a\u003e小店新开~\u003c/h3\u003e","tags":["问候"]}]</script><script>(() => {
+  const limitConfig = {}
+
+  const sortDataByDate = data => data.sort((a, b) => new Date(b.date) - new Date(a.date))
+
+  const filterDataByLimit = (data, limit) => {
+    if (!limit || !limit.type) return data
+    if (limit.type === 'num') return data.slice(0, limit.value)
+    if (limit.type === 'date') {
+      const limitDate = new Date(limit.value)
+      return data.filter(item => new Date(item.date) >= limitDate)
+    }
+    return data
+  };
+
+  const formatToTimeZone = (date) => {
+    const fullDate = date.length === 10 ? `${date} 00:00:00` : date
+    const visitorTimeZone = 'Asia/Shanghai' || Intl.DateTimeFormat().resolvedOptions().timeZone
+    const options = {
+      timeZone: visitorTimeZone,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    }
+    const [day, month, year, hour, minute, second] = new Intl.DateTimeFormat('en-GB', options)
+      .format(new Date(fullDate))
+      .match(/\d+/g)
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+  }
+
+  let currentPage = 1
+  const itemsPerPage = 8
+  let totalPages = 0
+  let data = []
+  let inputEventsAttached = false // Flag to mark if input event listeners have been added
+
+  const renderData = (dataSlice) => {
+    const content = dataSlice.map(item => {
+      const formattedDate = formatToTimeZone(item.date)
+      const tags = item.tags && item.tags.map(tag => `<span class="shuoshuo-tag">${tag}</span>`).join('') || ''
+      const commentButton = item.key && false
+        ? `<div class="shuoshuo-comment-btn" onclick="addCommentToShuoshuo(event)">
+            <i class="fa-solid fa-comments"></i>
+          </div>`
+        : ''
+      const commentContainer = item.key
+        ? `<div class="shuoshuo-comment no-comment" data-key="${item.key}"></div>`
+        : ''
+
+      return `
+        <div class="shuoshuo-item">
+          <div class="container">
+            <div class="shuoshuo-item-header">
+              <div class="shuoshuo-avatar">
+                <img class="no-lightbox" src="${item.avatar || 'https://avatars.githubusercontent.com/u/106674847?v=4'}">
+              </div>
+              <div class="shuoshuo-info">
+                <div class="shuoshuo-author">${item.author || 'Feixin'}</div>
+                <time class="shuoshuo-date" title="${formattedDate}">
+                  ${btf.diffDate(formattedDate, true)}
+                </time>
+              </div>
+            </div>
+            <div class="shuoshuo-content">${item.content}</div>
+            <div class="shuoshuo-footer ${tags ? 'flex-between' : 'flex-end'}">
+              ${tags ? `<div class="shuoshuo-tags">${tags}</div>` : ''}
+              ${commentButton}
+            </div>
+          </div>
+          ${commentContainer}
+        </div>`
+    }).join('')
+
+    const container = document.getElementById('article-container')
+    container.innerHTML = content
+
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    btf.loadLightbox(document.querySelectorAll('#article-container img:not(.no-lightbox)'))
+  }
+
+  const renderNavigation = () => {
+    const container = document.getElementById('article-container')
+    const existingNav = container.nextElementSibling
+    if (existingNav && existingNav.classList.contains('shuoshuo-navigation')) {
+      existingNav.remove()
+    }
+
+    const pageInfoTemplate = 'Page ${current} of ${total}'
+    const pageInfoText = pageInfoTemplate
+      .replace(/\$\{current}/g, currentPage)
+      .replace(/\$\{total}/g, totalPages)
+
+    const navHtml = `
+      <div class="shuoshuo-navigation">
+        <button onclick="window.shuoshuoPrevPage()" ${currentPage === 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left"></i></button>
+        <span class="shuoshuo-page-info">${pageInfoText}</span>
+        <input type="number" class="shuoshuo-page-input" min="1" max="${totalPages}" placeholder="${currentPage}" onkeydown="window.shuoshuoHandleKeyDown(event)">
+        <button onclick="window.shuoshuoNextPage()" ${currentPage === totalPages ? 'disabled' : ''}><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    `
+    container.insertAdjacentHTML('afterend', navHtml)
+
+    // Add input validation event listeners (only once)
+    if (!inputEventsAttached) {
+      setTimeout(() => {
+        const input = document.querySelector('.shuoshuo-page-input')
+        if (input) {
+          // Clear placeholder when clicking the input box
+          input.addEventListener('focus', (event) => {
+            event.target.placeholder = ''
+          })
+
+          // Restore placeholder if no content when losing focus
+          input.addEventListener('blur', (event) => {
+            if (!event.target.value.trim()) {
+              event.target.placeholder = currentPage
+            }
+          })
+
+          input.addEventListener('input', (event) => {
+            const value = parseInt(event.target.value) || 0
+            let wasInvalid = false
+
+            if (value > totalPages) {
+              event.target.value = totalPages
+              wasInvalid = true
+            } else if (value < 1 && event.target.value !== '') {
+              event.target.value = 1
+              wasInvalid = true
+            }
+
+            // If value is corrected, show red and shake effect
+            if (wasInvalid) {
+              event.target.classList.add('invalid')
+              setTimeout(() => {
+                event.target.classList.remove('invalid')
+              }, 500)
+            }
+          })
+
+          inputEventsAttached = true // Mark that event listeners have been added
+        }
+      }, 0)
+    }
+  }
+
+  const renderPage = (page) => {
+    const start = (page - 1) * itemsPerPage
+    const end = start + itemsPerPage
+    const pageData = data.slice(start, end)
+    renderData(pageData)
+    renderNavigation()
+  }
+
+  window.shuoshuoPrevPage = () => {
+    if (currentPage > 1) {
+      currentPage--
+      renderPage(currentPage)
+    }
+  }
+
+  window.shuoshuoNextPage = () => {
+    if (currentPage < totalPages) {
+      currentPage++
+      renderPage(currentPage)
+    }
+  }
+
+  window.shuoshuoGoToPage = (page) => {
+    if (typeof page === 'number') {
+      // Directly jump to the specified page
+      if (page >= 1 && page <= totalPages && page !== currentPage) {
+        currentPage = page
+        renderPage(currentPage)
+      }
+    } else {
+      // Get page from input box
+      const input = document.querySelector('.shuoshuo-page-input')
+      const inputValue = input.value.trim()
+      const inputPage = inputValue === '' ? currentPage : parseInt(inputValue)
+      if (inputPage >= 1 && inputPage <= totalPages && inputPage !== currentPage) {
+        currentPage = inputPage
+        renderPage(currentPage)
+      } else if (inputValue === '') {
+        // If input box is empty, re-render current page (update placeholder)
+        renderPage(currentPage)
+      }
+    }
+  }
+
+  window.shuoshuoHandleKeyDown = (event) => {
+    const input = event.target
+    const value = input.value + event.key
+
+    // Allow delete, arrow keys, backspace, etc.
+    if (event.key === 'Enter' || event.key === 'Backspace' || event.key === 'Delete' ||
+        event.key === 'ArrowLeft' || event.key === 'ArrowRight' ||
+        event.key === 'Tab' || event.ctrlKey || event.metaKey) {
+      if (event.key === 'Enter') {
+        window.shuoshuoGoToPage()
+      }
+      return
+    }
+
+    // Only allow numbers
+    if (!/^\d$/.test(event.key)) {
+      event.preventDefault()
+      return
+    }
+
+    // Check if the value after input exceeds the range
+    const newValue = parseInt(value) || 0
+    if (newValue > totalPages || (value.length > 1 && newValue === 0)) {
+      event.preventDefault()
+      // Add red and shake effect
+      input.classList.add('invalid')
+      setTimeout(() => {
+        input.classList.remove('invalid')
+      }, 500)
+    }
+  }
+
+  const loadShuoshuo = async () => {
+    try {
+      let originData = []
+      if (false) {
+        const response = await fetch('/blog/')
+        originData = await response.json()
+      } else {
+        const dataElement = document.getElementById('shuoshuo-data')
+        originData = dataElement ? JSON.parse(dataElement.textContent) : []
+      }
+
+      data = filterDataByLimit(sortDataByDate(originData), limitConfig)
+
+      totalPages = Math.ceil(data.length / itemsPerPage)
+
+      renderPage(currentPage)
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
+  window.pjax ? loadShuoshuo() : window.addEventListener('load', loadShuoshuo)
+})()</script></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://avatars.githubusercontent.com/u/106674847?v=4" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Feixin</div><div class="author-info-description">暂停时间本是神技，但记录生活让我们习得了神的技能</div><div class="site-data"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">2</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">1</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/paintstar"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">小店新开~</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/10/29/demo/" title="demo">demo</a><time datetime="2025-10-29T12:44:08.000Z" title="Created 2025-10-29 20:44:08">2025-10-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/10/29/hello-world/" title="Hello World">Hello World</a><time datetime="2025-10-29T10:58:09.460Z" title="Created 2025-10-29 18:58:09">2025-10-29</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/Nexent/"><span class="card-category-list-name">Nexent</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/Nexent/v1-7-5/"><span class="card-category-list-name">v1.7.5</span><span class="card-category-list-count">1</span></a></li></ul></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/blog/tags/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" style="font-size: 1.1em; color: #999">学习记录</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/10/">
+            <span class="card-archive-list-date">
+              October 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">2</div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-10-30T08:38:22.460Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By Feixin</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">繁</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js?v=5.5.1"></script><script src="/blog/js/main.js?v=5.5.1"></script><script src="/blog/js/tw_cn.js?v=5.5.1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
