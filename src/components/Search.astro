@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+import { url } from '../lib/posts';
+---
+
+<dialog
+  id="search-dialog"
+  class="search-dialog"
+  aria-labelledby="search-title"
+  data-index-url={url('search.json')}
+>
+  <div class="search-top">
+    <h2 id="search-title">搜索笔记</h2>
+    <button class="icon-button" id="close-search" aria-label="关闭搜索">
+      <Icon name="close" />
+    </button>
+  </div>
+  <label class="search-input-wrap">
+    <Icon name="search" />
+    <span class="sr-only">文章标题、标签或正文</span>
+    <input
+      id="search-input"
+      type="search"
+      placeholder="输入关键词，寻找一个思路…"
+      autocomplete="off"
+    />
+  </label>
+  <p class="search-status" id="search-status" role="status">
+    搜索文章标题、标签和正文。
+  </p>
+  <div id="search-results" class="search-results"></div>
+  <div class="search-hint">
+    <span>
+      <kbd>↑</kbd> <kbd>↓</kbd> 选择 · <kbd>Enter</kbd> 阅读
+    </span>
+    <span>
+      <kbd>Esc</kbd> 关闭
+    </span>
+  </div>
+</dialog>

@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import PostList from './PostList.astro';
+import { url, type Post } from '../lib/posts';
+interface Props {
+  posts: Post[];
+  title?: string;
+  description?: string;
+}
+const { posts, title = '文章归档', description = '把零散的思考，慢慢连成一条线。' } = Astro.props;
+const years = [...new Set(posts.map((post) => post.data.date.getUTCFullYear()))];
+---
+
+<Base title={title}>
+  <div class="shell page-shell">
+    <header class="page-heading">
+      <p class="eyebrow">THE NOTEBOOK / ARCHIVE</p>
+      <h1>
+        {title}
+        <span class="article-count mono">{posts.length}</span>
+      </h1>
+      <p>{description}</p>
+      <div class="archive-tools">
+        <a href={url('archives/')}>全部文章</a>
+        <a href={url('tags/')}>按标签</a>
+        <a href={url('categories/')}>按分类</a>
+      </div>
+    </header>
+    {years.map((year) => (
+      <section class="archive-year">
+        <div class="year-heading">
+          <h2 class="mono">{year}</h2>
+          <span>
+            {posts.filter((post) => post.data.date.getUTCFullYear() === year).length} 篇笔记
+          </span>
+        </div>
+        <PostList posts={posts.filter((post) => post.data.date.getUTCFullYear() === year)} />
+      </section>
+    ))}
+    {!posts.length && <p class="empty-note">这里还没有笔记。</p>}
+  </div>
+</Base>

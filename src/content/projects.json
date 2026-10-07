@@ -1,0 +1,44 @@
+[
+  {
+    "name": "ShinApple",
+    "repository": "apple-music-custom-lyric",
+    "url": "https://github.com/paintstar/apple-music-custom-lyric",
+    "kind": "music",
+    "category": "macOS 应用",
+    "description": "macOS 原生歌曲语言学习播放器。与「音乐」App 协作，提供同步歌词、中文译文和逐句重听，歌词与学习资料保存在本机。",
+    "stack": ["Swift", "macOS", "SQLite"],
+    "features": [
+      "同步原文与中文译文，点击歌词重听对应句子",
+      "导入、编辑与导出 LRC 或双语歌词",
+      "本地歌词库、资料库浏览和播放控制"
+    ]
+  },
+  {
+    "name": "提瓦特 · 语旅",
+    "repository": "Genshin-text-learning",
+    "url": "https://github.com/paintstar/Genshin-text-learning",
+    "kind": "language",
+    "category": "日语学习",
+    "description": "在《原神》的剧情中学习日语。提供日中对照阅读、假名注音、词典查询和生词笔记，已下载的剧情可以离线阅读。",
+    "stack": ["Rust", "Tauri", "离线词典"],
+    "features": [
+      "搜索剧情任务，阅读日中对照台词",
+      "假名注音、活用还原和词典查询",
+      "收藏生词与句子，保存阅读进度"
+    ]
+  },
+  {
+    "name": "IntelliPaper",
+    "repository": "IntelliPaper",
+    "url": "https://github.com/paintstar/IntelliPaper",
+    "kind": "papers",
+    "category": "论文检索与问答",
+    "description": "学术论文检索与 RAG 问答平台。从 arXiv 收集论文，完成 PDF 解析、分块和索引，支持混合检索与问答，并提供统一的 Vue 控制台。",
+    "stack": ["Python", "FastAPI", "Vue", "OpenSearch"],
+    "features": [
+      "自动收集 arXiv 论文，支持手动上传 PDF",
+      "BM25、向量与混合检索",
+      "传统 RAG 与 Agentic RAG 问答"
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.mjs';
+import { allPosts, url } from '../lib/posts';
+import projects from '../content/projects.json';
+const posts = await allPosts();
+---
+
+<Base title="关于">
+  <div class="shell page-shell">
+    <header class="page-heading">
+      <p class="eyebrow">ABOUT</p>
+      <h1>
+        {site.author}
+        <span style="color:var(--accent)">.</span>
+      </h1>
+      <p>{site.motto}</p>
+    </header>
+    <div class="about-layout">
+      <div class="prose">
+        <p>
+          <a href={site.github} target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>{' '}
+          · <a href={url('projects/')}>项目</a> · <a href={url('rss.xml')}>RSS 订阅</a>
+        </p>
+        <p>
+          <a href={url('shuoshuo/')}>随记</a> ·{' '}
+          <a href={url('link/')}>友情链接</a>
+        </p>
+      </div>
+      <aside class="about-side">
+        <dl>
+          <dt>文章</dt>
+          <dd>{posts.length} 篇</dd>
+          <dt>项目</dt>
+          <dd>{projects.length} 个</dd>
+          <dt>文章主题</dt>
+          <dd>{[...new Set(posts.map((post) => post.data.topic))].join(' / ')}</dd>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import projects from '../content/projects.json';
+---
+
+<Base title="项目">
+  <div class="shell page-shell">
+    <header class="page-heading">
+      <p class="eyebrow">PROJECTS</p>
+      <h1>
+        项目<span class="article-count mono">{projects.length}</span>
+      </h1>
+    </header>
+    <div class="project-grid">
+      {projects.map((project) => (
+        <ProjectCard project={project} details />
+      ))}
+    </div>
+  </div>
+</Base>

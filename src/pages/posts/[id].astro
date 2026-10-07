@@ -1,0 +1,98 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { allPosts, dateLabel, postUrl, readingTime, url } from '../../lib/posts';
+import 'katex/dist/katex.min.css';
+export async function getStaticPaths() {
+  const posts = await allPosts();
+  return posts.map((post, index) => ({
+    params: { id: post.id },
+    props: { post, previous: posts[index + 1], next: posts[index - 1] },
+  }));
+}
+const { post, previous, next } = Astro.props;
+const { Content, headings } = await render(post);
+const toc = headings.filter((heading) => heading.depth <= 4);
+---
+
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  article
+  date={post.data.date}
+  updated={post.data.updated}
+>
+  <div class="reading-progress" aria-hidden="true"></div>
+  <div class="article-shell shell">
+    <header class="article-header">
+      <a class="back-link" href={url('archives/')}>
+        <span>←</span> 所有笔记
+      </a>
+      <div class="post-meta">
+        <span class="topic-label">{post.data.topic}</span>
+        <span class="meta-separator">/</span>
+        <time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date)}</time>
+        <span class="meta-separator">/</span>
+        <span>{readingTime(post)} 分钟阅读</span>
+      </div>
+      <h1>{post.data.title}</h1>
+      <p class="article-deck">{post.data.description}</p>
+      <div class="article-tags">
+        {post.data.tags.map((tag) => (
+          <a href={url(`tags/${encodeURIComponent(tag)}/`)}># {tag}</a>
+        ))}
+      </div>
+    </header>
+    <div class="article-layout">
+      <article class="prose">
+        <Content />
+        <div class="article-end">
+          <span class="end-mark">✳</span>
+          <p>谢谢你读到这里。</p>
+          <span class="mono">
+            {post.data.updated
+              ? `更新于 ${dateLabel(post.data.updated)}`
+              : dateLabel(post.data.date)}
+          </span>
+        </div>
+        <nav class="post-navigation" aria-label="相邻文章">
+          {previous ? (
+            <a href={postUrl(previous)}>
+              <span>← 更早的笔记</span>
+              <strong>{previous.data.title}</strong>
+            </a>
+          ) : (
+            <div />
+          )}
+          {next && (
+            <a href={postUrl(next)}>
+              <span>更新的笔记 →</span>
+              <strong>{next.data.title}</strong>
+            </a>
+          )}
+        </nav>
+      </article>
+      {toc.length > 0 && (
+        <aside class="article-sidebar">
+          <nav class="toc" aria-label="文章目录">
+            <p class="eyebrow">ON THIS PAGE</p>
+            <ol>
+              {toc.map((heading) => (
+                <li
+                  class:list={{
+                    'toc-nested': heading.depth > Math.min(...toc.map((item) => item.depth)),
+                  }}
+                >
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+            <a class="toc-top" href="#main">
+              回到顶部 ↑
+            </a>
+          </nav>
+        </aside>
+      )}
+    </div>
+  </div>
+</Base>

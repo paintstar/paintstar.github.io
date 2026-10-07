@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allPosts, url } from '../../lib/posts';
+const posts = await allPosts();
+const tags = [...new Set(posts.flatMap((post) => post.data.tags))]
+  .map((tag) => ({ tag, count: posts.filter((post) => post.data.tags.includes(tag)).length }))
+  .sort((a, b) => b.count - a.count);
+---
+
+<Base title="标签">
+  <div class="shell page-shell">
+    <header class="page-heading">
+      <p class="eyebrow">THE NOTEBOOK / TOPICS</p>
+      <h1>从一个关键词开始。</h1>
+      <p>在不同的笔记之间，发现相似的思路。</p>
+    </header>
+    <div class="tag-cloud">
+      {tags.map(({ tag, count }) => (
+        <a href={url(`tags/${encodeURIComponent(tag)}/`)}>
+          {tag}
+          <span class="mono">{count}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

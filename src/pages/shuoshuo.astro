@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import notes from '../content/notes.json';
+import { dateLabel } from '../lib/posts';
+---
+
+<Base title="随记">
+  <div class="shell page-shell">
+    <header class="page-heading">
+      <p class="eyebrow">SMALL MOMENTS / JOURNAL</p>
+      <h1>生活的旁注。</h1>
+      <p>不需要写成文章，也值得记录。</p>
+    </header>
+    {notes.map((note) => (
+      <article class="short-note">
+        <time datetime={note.date}>{dateLabel(new Date(note.date))}</time>
+        <div class="prose">
+          <p>{note.content}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</Base>

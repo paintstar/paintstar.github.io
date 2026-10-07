@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/posts';
+---
+
+<Base title="页面未找到">
+  <div class="shell page-shell error-page">
+    <p class="eyebrow">404 / A LITTLE DETOUR</p>
+    <h1>
+      这个想法，
+      <br />
+      还没有写下来。
+    </h1>
+    <p>页面可能已移动，也可能是地址写错了。</p>
+    <a class="primary-link" href={url()}>
+      回到首页 →
+    </a>
+  </div>
+</Base>

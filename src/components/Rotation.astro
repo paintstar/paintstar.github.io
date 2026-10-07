@@ -1,0 +1,85 @@
+<svg class="rotation-art" viewBox="0 0 380 300" fill="none" aria-hidden="true">
+  <defs>
+    <pattern id="dot-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r=".8" fill="currentColor" opacity=".15" />
+    </pattern>
+    <marker
+      id="vector-head"
+      viewBox="0 0 10 10"
+      refX="8"
+      refY="5"
+      markerWidth="5"
+      markerHeight="5"
+      orient="auto-start-reverse"
+    >
+      <path d="M0 0 10 5 0 10z" fill="currentColor" />
+    </marker>
+  </defs>
+  <rect width="380" height="300" fill="url(#dot-grid)" />
+  <g transform="translate(190 150)">
+    <path d="M-145 0H145M0-120V120" stroke="currentColor" opacity=".18" />
+    <circle r="100" stroke="currentColor" opacity=".25" />
+    <circle r="65" stroke="currentColor" stroke-dasharray="3 6" opacity=".18" />
+    <path
+      d="M0 0 94-34"
+      stroke="currentColor"
+      stroke-width="2"
+      opacity=".4"
+      marker-end="url(#vector-head)"
+    />
+    <path d="M47-17A50 50 0 0 0 25-43" stroke="var(--accent)" stroke-width="1.5" />
+    <g class="rotating-vector">
+      <path d="M0 0 50-86.6" stroke="var(--accent)" stroke-width="2.5" />
+      <circle cx="50" cy="-86.6" r="5" fill="var(--accent)" />
+      <circle cx="50" cy="-86.6" r="12" stroke="var(--accent)" opacity=".25" />
+    </g>
+    <circle r="4" fill="currentColor" />
+    <text
+      x="104"
+      y="-28"
+      fill="currentColor"
+      font-size="16"
+      font-family="Georgia,serif"
+      font-style="italic"
+    >
+      q
+    </text>
+    <text
+      x="63"
+      y="-97"
+      fill="var(--accent)"
+      font-size="16"
+      font-family="Georgia,serif"
+      font-style="italic"
+    >
+      R(θ)q
+    </text>
+    <text
+      x="41"
+      y="-40"
+      fill="var(--accent)"
+      font-size="15"
+      font-family="Georgia,serif"
+      font-style="italic"
+    >
+      θ
+    </text>
+    <text x="135" y="18" fill="currentColor" opacity=".5" font-size="11" font-family="monospace">
+      Re
+    </text>
+    <text x="10" y="-108" fill="currentColor" opacity=".5" font-size="11" font-family="monospace">
+      Im
+    </text>
+  </g>
+  <text
+    x="22"
+    y="278"
+    fill="currentColor"
+    opacity=".45"
+    font-size="10"
+    font-family="monospace"
+    letter-spacing="2"
+  >
+    ROTARY POSITION EMBEDDING
+  </text>
+</svg>

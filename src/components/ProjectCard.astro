@@ -1,0 +1,50 @@
+---
+import projects from '../content/projects.json';
+import Icon from './Icon.astro';
+interface Props {
+  project: (typeof projects)[number];
+  details?: boolean;
+}
+const { project, details = false } = Astro.props;
+---
+
+<article class="project-card" class:list={{ 'project-detailed': details }}>
+  <div class="project-top">
+    <span class="project-symbol" aria-hidden="true">
+      {project.kind === 'music' ? '♫' : project.kind === 'language' ? 'あ' : '⌘'}
+    </span>
+    <span class="post-meta">{project.category}</span>
+    <a
+      class="project-external"
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${project.name} 的 GitHub 仓库`}
+    >
+      <Icon name="arrow" />
+    </a>
+  </div>
+  <h3>
+    <a href={project.url} target="_blank" rel="noopener noreferrer">
+      {project.name}
+    </a>
+  </h3>
+  <p class="project-description">{project.description}</p>
+  {details && (
+    <ul class="project-features">
+      {project.features.map((feature) => (
+        <li>{feature}</li>
+      ))}
+    </ul>
+  )}
+  <div class="project-stack">
+    {project.stack.map((tech) => (
+      <span>{tech}</span>
+    ))}
+  </div>
+  {details && (
+    <a class="project-repository mono" href={project.url} target="_blank" rel="noopener noreferrer">
+      {project.repository} <Icon name="github" />
+    </a>
+  )}
+</article>

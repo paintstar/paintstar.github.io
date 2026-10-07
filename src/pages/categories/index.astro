@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allPosts, categorySlug, url } from '../../lib/posts';
+const posts = await allPosts();
+const categories = [
+  ...new Set(
+    posts.map((post) => post.data.category).filter((category): category is string => !!category),
+  ),
+];
+---
+
+<Base title="分类">
+  <div class="shell page-shell">
+    <header class="page-heading">
+      <p class="eyebrow">THE NOTEBOOK / COLLECTIONS</p>
+      <h1>不同方向，同样好奇。</h1>
+      <p>按分类浏览笔记。</p>
+    </header>
+    <div class="tag-cloud">
+      {categories.map((category) => (
+        <a href={url(`categories/${encodeURIComponent(categorySlug(category))}/`)}>
+          {category}
+          <span class="mono">{posts.filter((post) => post.data.category === category).length}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

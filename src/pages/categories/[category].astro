@@ -1,0 +1,18 @@
+---
+import Archive from '../../components/Archive.astro';
+import { allPosts, categorySlug } from '../../lib/posts';
+export async function getStaticPaths() {
+  const posts = await allPosts();
+  return [
+    ...new Set(
+      posts.map((post) => post.data.category).filter((category): category is string => !!category),
+    ),
+  ].map((category) => ({
+    params: { category: categorySlug(category) },
+    props: { category, posts: posts.filter((post) => post.data.category === category) },
+  }));
+}
+const { category, posts } = Astro.props;
+---
+
+<Archive posts={posts} title={category} />
