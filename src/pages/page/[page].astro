@@ -1,0 +1,14 @@
+---
+import Articles from '../../components/Articles.astro';
+import { allPosts } from '../../lib/posts';
+import { postPages } from '../../lib/pagination';
+export async function getStaticPaths() {
+  return postPages(await allPosts(), '').slice(1).map((page) => ({
+    params: { page: String(page.currentPage) },
+    props: { page },
+  }));
+}
+const { page } = Astro.props;
+---
+
+<Articles page={page} />

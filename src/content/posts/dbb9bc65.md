@@ -3,9 +3,8 @@ title: "算法训练 Acwing 5937 - 汉诺塔问题"
 description: "从经典汉诺塔问题出发，梳理递归的拆解方式、终止条件与移动次数。"
 date: "2025-12-25T06:06:06.000Z"
 updated: "2025-12-28T05:32:28.419Z"
-tags: ["Acwing","Algorithm","递归"]
-category: "Algorithm-ICPC Dream"
-topic: "算法"
+topic: "算法题目"
+tags: ["AcWing","递归","算法题"]
 ---
 
 ## 题目链接

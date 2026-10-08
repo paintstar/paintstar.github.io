@@ -9,6 +9,19 @@ export const dateLabel = (date: Date) =>
   new Intl.DateTimeFormat('sv-SE', { timeZone: site.timezone }).format(date);
 export const categorySlug = (name: string) => name.replace(/[\\/\s]+/g, '-');
 export const tagSlug = categorySlug;
+export const categoryUrl = (name: string) =>
+  url(`categories/${encodeURIComponent(categorySlug(name))}/`);
+// The main topic is also a category; additional categories may overlap.
+export const postCategories = (post: Post) =>
+  [...new Set([post.data.topic, ...post.data.categories])];
+export const postTopics = (posts: Post[]) =>
+  [...new Set(posts.map((post) => post.data.topic))].sort((a, b) => {
+    const rank = (name: string) => {
+      const index = site.topics.indexOf(name);
+      return index < 0 ? site.topics.length : index;
+    };
+    return rank(a) - rank(b) || a.localeCompare(b, site.language);
+  });
 export const readingTime = (post: Post) => {
   const text = (post.body ?? '').replace(/```[\s\S]*?```/g, '').replace(/https?:\/\/\S+/g, '');
   const characters = text.match(/[\u3400-\u9fff]/g)?.length ?? 0;

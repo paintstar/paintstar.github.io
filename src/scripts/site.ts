@@ -3,6 +3,7 @@ type SearchPost = {
   description: string;
   tags: string[];
   topic: string;
+  categories: string[];
   body: string;
   url: string;
   date: string;
@@ -79,7 +80,7 @@ async function search() {
     const matches = posts
       .map((post) => {
         const title = post.title.toLocaleLowerCase();
-        const labels = `${post.topic} ${post.tags.join(' ')}`.toLocaleLowerCase();
+        const labels = `${post.categories.join(' ')} ${post.tags.join(' ')}`.toLocaleLowerCase();
         const text = `${title} ${labels} ${post.description} ${post.body}`.toLocaleLowerCase();
         return {
           post,
@@ -157,19 +158,6 @@ document.addEventListener('keydown', (event) => {
   }
   if (event.key === 'Enter' && selected >= 0 && document.activeElement === input)
     links[selected]?.click();
-});
-
-document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((button) => {
-  button.addEventListener('click', () => {
-    document
-      .querySelectorAll('[data-filter]')
-      .forEach((tab) => tab.setAttribute('aria-pressed', String(tab === button)));
-    document.querySelectorAll<HTMLElement>('.post-row[data-topic]').forEach((row) => {
-      row.hidden = button.dataset.filter !== 'all' && row.dataset.topic !== button.dataset.filter;
-    });
-    const empty = document.querySelector<HTMLElement>('#filter-empty');
-    if (empty) empty.hidden = !!document.querySelector('.post-row[data-topic]:not([hidden])');
-  });
 });
 
 document.querySelectorAll<HTMLPreElement>('.prose pre').forEach((pre) => {

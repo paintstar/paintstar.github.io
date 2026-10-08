@@ -1,0 +1,20 @@
+---
+import Archive from '../../components/Archive.astro';
+import { allPosts, categorySlug, postCategories } from '../../lib/posts';
+import { postPages } from '../../lib/pagination';
+export async function getStaticPaths() {
+  const posts = await allPosts();
+  return [...new Set(posts.flatMap(postCategories))].flatMap((category) =>
+    postPages(
+      posts.filter((post) => postCategories(post).includes(category)),
+      `categories/${encodeURIComponent(categorySlug(category))}/`,
+    ).map((page) => ({
+      params: { path: `${categorySlug(category)}${page.currentPage > 1 ? `/page/${page.currentPage}` : ''}` },
+      props: { category, page },
+    })),
+  );
+}
+const { category, page } = Astro.props;
+---
+
+<Archive page={page} title={category} category={category} />

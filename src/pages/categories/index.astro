@@ -1,26 +1,26 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { allPosts, categorySlug, url } from '../../lib/posts';
+import { allPosts, categoryUrl, postCategories, postTopics } from '../../lib/posts';
 const posts = await allPosts();
-const categories = [
-  ...new Set(
-    posts.map((post) => post.data.category).filter((category): category is string => !!category),
-  ),
-];
+const topics = postTopics(posts);
+const categories = [...new Set(posts.flatMap(postCategories))].sort((a, b) => {
+  const rank = (name: string) => topics.includes(name) ? topics.indexOf(name) : topics.length;
+  return rank(a) - rank(b) || a.localeCompare(b, 'zh-CN');
+});
 ---
 
 <Base title="分类">
   <div class="shell page-shell">
     <header class="page-heading">
       <p class="eyebrow">THE NOTEBOOK / COLLECTIONS</p>
-      <h1>不同方向，同样好奇。</h1>
+      <h1>分类</h1>
       <p>按分类浏览笔记。</p>
     </header>
     <div class="tag-cloud">
       {categories.map((category) => (
-        <a href={url(`categories/${encodeURIComponent(categorySlug(category))}/`)}>
+        <a href={categoryUrl(category)}>
           {category}
-          <span class="mono">{posts.filter((post) => post.data.category === category).length}</span>
+          <span class="mono">{posts.filter((post) => postCategories(post).includes(category)).length}</span>
         </a>
       ))}
     </div>

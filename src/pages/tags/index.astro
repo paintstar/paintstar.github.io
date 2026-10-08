@@ -11,8 +11,8 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))]
   <div class="shell page-shell">
     <header class="page-heading">
       <p class="eyebrow">THE NOTEBOOK / TOPICS</p>
-      <h1>从一个关键词开始。</h1>
-      <p>在不同的笔记之间，发现相似的思路。</p>
+      <h1>标签</h1>
+      <p>按关键词浏览文章。</p>
     </header>
     <div class="tag-cloud">
       {tags.map(({ tag, count }) => (

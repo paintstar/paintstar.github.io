@@ -3,9 +3,9 @@ title: "算法训练 leetcode 665. 非递减序列"
 description: "只修改一个元素，能否让整个序列变得非递减？从相邻元素的关系寻找判断条件。"
 date: "2025-12-25T06:16:47.000Z"
 updated: "2025-12-28T05:32:33.528Z"
-tags: ["Algorithm","leetcode","思维"]
-category: "Algorithm-ICPC Dream"
-topic: "算法"
+topic: "算法题目"
+categories: ["leetcode"]
+tags: ["leetcode","贪心","算法题"]
 ---
 
 ## 题目链接

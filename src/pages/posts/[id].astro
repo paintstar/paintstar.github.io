@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { allPosts, dateLabel, postUrl, readingTime, tagSlug, url } from '../../lib/posts';
+import { allPosts, categoryUrl, dateLabel, postCategories, postUrl, readingTime, tagSlug, url } from '../../lib/posts';
 import 'katex/dist/katex.min.css';
 export async function getStaticPaths() {
   const posts = await allPosts();
@@ -29,7 +29,9 @@ const toc = headings.filter((heading) => heading.depth <= 4);
         <span>←</span> 所有笔记
       </a>
       <div class="post-meta">
-        <span class="topic-label">{post.data.topic}</span>
+        {postCategories(post).map((category) => (
+          <a class="topic-label" href={categoryUrl(category)}>{category}</a>
+        ))}
         <span class="meta-separator">/</span>
         <time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date)}</time>
         <span class="meta-separator">/</span>

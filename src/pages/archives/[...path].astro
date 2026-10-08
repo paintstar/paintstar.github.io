@@ -1,0 +1,32 @@
+---
+import Archive from '../../components/Archive.astro';
+import { allPosts, dateLabel } from '../../lib/posts';
+import { postPages } from '../../lib/pagination';
+export async function getStaticPaths() {
+  const posts = await allPosts();
+  const periods = new Set(
+    posts.flatMap((post) => [
+      dateLabel(post.data.date).slice(0, 4),
+      dateLabel(post.data.date).slice(0, 7).replace('-', '/'),
+    ]),
+  );
+  return [
+    ...postPages(posts, 'archives/').slice(1).map((page) => ({
+      params: { path: `page/${page.currentPage}` },
+      props: { page, title: '文章归档' },
+    })),
+    ...[...periods].flatMap((period) =>
+      postPages(
+        posts.filter((post) => dateLabel(post.data.date).replaceAll('-', '/').startsWith(period)),
+        `archives/${period}/`,
+      ).map((page) => ({
+        params: { path: `${period}${page.currentPage > 1 ? `/page/${page.currentPage}` : ''}` },
+        props: { page, title: `${period.replace('/', ' / ')} 的文章` },
+      })),
+    ),
+  ];
+}
+const { page, title } = Astro.props;
+---
+
+<Archive page={page} title={title} />

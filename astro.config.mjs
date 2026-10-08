@@ -32,6 +32,13 @@ export default defineConfig({
   base: site.base,
   output: 'static',
   trailingSlash: 'always',
+  // Preserve category/tag links that existed before the taxonomy cleanup.
+  redirects: {
+    '/categories/Algorithm-ICPC-Dream/': '/categories/算法题目/',
+    '/categories/算法/': '/categories/算法题目/',
+    '/tags/Algorithm/': '/tags/算法题/',
+    '/tags/动态规划/': '/tags/dp/',
+  },
   integrations: [sitemap()],
   markdown: {
     processor: unified({

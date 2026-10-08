@@ -20,6 +20,9 @@ const nav = [
   { title: '归档', path: 'archives/' },
   { title: '关于', path: 'about/' },
 ];
+const isActive = (itemPath: string) => itemPath
+  ? path.startsWith(url(itemPath))
+  : path === url() || ['page/', 'categories/', 'tags/', 'posts/'].some((prefix) => path.startsWith(url(prefix)));
 const pageTitle = title ? `${title} · ${site.name}` : site.name;
 const schema = article
   ? {
@@ -93,7 +96,7 @@ const schema = article
           <a
             href={url(item.path)}
             class:list={{
-              active: path === url(item.path) || (item.path && path.startsWith(url(item.path))),
+              active: isActive(item.path),
             }}
             aria-current={path === url(item.path) ? 'page' : undefined}
           >

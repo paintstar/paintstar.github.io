@@ -1,0 +1,36 @@
+---
+import { allPosts, categoryUrl, postCategories, postTopics, url } from '../lib/posts';
+interface Props {
+  current?: string;
+}
+const { current } = Astro.props;
+const posts = await allPosts();
+const topics = postTopics(posts);
+const matchingTopics = [...new Set(posts.filter((post) => postCategories(post).includes(current ?? '')).map((post) => post.data.topic))];
+const currentTopic = topics.includes(current ?? '') ? current : matchingTopics.length === 1 ? matchingTopics[0] : undefined;
+const topicPosts = posts.filter((post) => post.data.topic === currentTopic);
+const subcategories = [...new Set(topicPosts.flatMap((post) => post.data.categories))];
+---
+
+<nav class="topic-filters" aria-label="文章栏目">
+  <a href={url()} aria-current={!current ? 'page' : undefined}>
+    全部 <span class="mono">{posts.length}</span>
+  </a>
+  {topics.map((topic) => (
+    <a href={categoryUrl(topic)} class:list={{ selected: currentTopic === topic }} aria-current={current === topic ? 'page' : undefined}>
+      {topic} <span class="mono">{posts.filter((post) => post.data.topic === topic).length}</span>
+    </a>
+  ))}
+</nav>
+{currentTopic && subcategories.length > 0 && (
+  <nav class="topic-filters subcategory-filters" aria-label={`${currentTopic}的分类`}>
+    <a href={categoryUrl(currentTopic)} aria-current={current === currentTopic ? 'page' : undefined}>
+      全部{currentTopic} <span class="mono">{topicPosts.length}</span>
+    </a>
+    {subcategories.map((category) => (
+      <a href={categoryUrl(category)} aria-current={current === category ? 'page' : undefined}>
+        {category} <span class="mono">{topicPosts.filter((post) => post.data.categories.includes(category)).length}</span>
+      </a>
+    ))}
+  </nav>
+)}

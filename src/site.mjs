@@ -9,6 +9,6 @@ export const site = {
   description: 'shin 的个人博客，包含文章、项目介绍与学习记录。',
   motto: '暂停时间本是神技，但记录生活让我们习得了神的技能。',
   github: 'https://github.com/paintstar',
-  topics: ['工程实践', '大模型', '算法', '学习记录'],
-  homePostCount: 6,
+  topics: ['工程实践', '大模型', '算法题目', '算法基础', '学习记录'],
+  pageSize: 10,
 };

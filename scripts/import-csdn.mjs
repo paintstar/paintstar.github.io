@@ -107,11 +107,40 @@ function dateValue(raw) {
   return value;
 }
 
-function topicFor(title, tags, category) {
-  const labels = `${title} ${tags.join(' ')} ${category ?? ''}`;
-  if (/物理|磁场|大物|dl转化/i.test(labels)) return '学习记录';
-  if (/算法|单调队列|codefor[ce]*es|\bpta\b|\bhdu\b|ICPC|蓝桥|并查集|贪心|归并|动态规划|欧几里得|二分|\bdp\b|素数|素因子/i.test(labels)) return '算法';
-  return '工程实践';
+function classifyArticle(title, originalTags, links) {
+  // CSDN's section may be a language or even the article title, so it is not a category.
+  const aliases = new Map(Object.entries({
+    '动态规划': 'dp', '贪心算法': '贪心', '深度优先': 'dfs', '宽度优先': 'bfs',
+    'c++': 'C++', 'c语言': 'C', 'golang': 'Go', 'mysql': 'MySQL', 'linux': 'Linux',
+    'vue': 'Vue', 'python': 'Python', 'javascript': 'JavaScript', 'vscode': 'VSCode',
+    'spring boot': 'Spring Boot', 'css3': 'CSS', 'html5': 'HTML', 'echarts': 'ECharts',
+  }));
+  const genericTags = new Set(['其他', '经验分享', '开发语言', '学习', '笔记', 'ide', '编辑器', '前端框架', '算法', 'Algorithm']);
+  const tags = originalTags.filter(tag => (tag !== title || title.length <= 16) && !genericTags.has(tag))
+    .map(tag => aliases.get(tag.toLowerCase()) ?? aliases.get(tag) ?? tag);
+  const context = `${title} ${links.join(' ')}`;
+  const theory = /欧几里得|整数除法.*取整/.test(title);
+  const problem = /leetcode|codefor[ce]*es|\bcf\b|\bpta\b|pintia\.cn|\bhdu\b|acm\.hdu|ac\.nowcoder\.com\/acm|acwing|ICPC|CCPC|蓝桥|交互题|\bdp\b/i.test(context);
+  const learning = /学习笔记|基础语法|基本命令|常用命令.*(?:练习|实验)|vector.*(?:疑惑|循环)|大物|物理|磁场/i.test(title);
+  const topic = theory ? '算法基础' : problem ? '算法题目' : learning ? '学习记录' : '工程实践';
+  const categories = [];
+  if (problem && !theory) {
+    tags.push('算法题');
+    if (/leetcode/i.test(context)) { categories.push('leetcode'); tags.push('leetcode'); }
+    // Only an explicit ICPC source is enough to assign the ICPC collection.
+    if (/\bICPC\b/i.test(context)) { categories.push('ICPC'); tags.push('ICPC'); }
+    if (/codefor[ce]*es|\bcf\b/i.test(context)) tags.push('Codeforces');
+    if (/\bpta\b|pintia\.cn/i.test(context)) tags.push('PTA');
+    if (/\bhdu\b|acm\.hdu/i.test(context)) tags.push('HDU');
+    if (/蓝桥/.test(context)) tags.push('蓝桥杯');
+    if (/\bdp\b|动态规划/i.test(title)) tags.push('dp');
+    for (const method of ['二分', '单调队列', '并查集', '贪心', '分治', '递归', '位运算']) {
+      if (title.includes(method)) tags.push(method);
+    }
+    if (/交互题/.test(title)) tags.push('交互题');
+  }
+  if (topic === '学习记录') tags.push('学习记录');
+  return { topic, categories, tags: [...new Set(tags)] };
 }
 
 async function importPost(item, knownIds) {
@@ -124,8 +153,9 @@ async function importPost(item, knownIds) {
   const meta = name => $(`meta[property="${name}"]`).attr('content');
   const date = dateValue(meta('article:published_time') || $('.blog-postTime').attr('data-time') || item.date);
   const updated = meta('article:modified_time');
-  const tags = [...new Set((meta('article:tag') ?? '').split(/[,，]/).map(tag => tag.trim()).filter(Boolean))];
-  const category = meta('article:section')?.trim();
+  const originalTags = [...new Set((meta('article:tag') ?? '').split(/[,，]/).map(tag => tag.trim()).filter(Boolean))];
+  const links = body.find('a[href]').map((_, element) => $(element).attr('href')).get();
+  const classification = classifyArticle(title, originalTags, links);
   body.find('button,style,svg[style*="display: none"],.toc,.hljs-button,.code-toolbar .toolbar,.line-numbers-rows').remove();
   body.find('iframe').each((_, element) => {
     const src = $(element).attr('src');
@@ -223,7 +253,7 @@ async function importPost(item, knownIds) {
     markdown = markdown.replace(new RegExp(`^([ \\t]*)${token}`, 'gm'), (_, indent) => indent + expression.replace(/\n/g, '\n' + indent));
     markdown = markdown.replaceAll(token, () => expression);
   });
-  const data = { title, description, date, ...(updated ? { updated: dateValue(updated) } : {}), tags, ...(category ? { category } : {}), topic: topicFor(title, tags, category) };
+  const data = { title, description, date, ...(updated ? { updated: dateValue(updated) } : {}), ...classification };
   const frontmatter = Object.entries(data).map(([key, value]) => `${key}: ${JSON.stringify(value)}`).join('\n');
   const destination = path.join(postsDir, `csdn-${item.id}.md`);
   // Existing blog content is never overwritten by a repeated import.

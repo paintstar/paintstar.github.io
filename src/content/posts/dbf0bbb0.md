@@ -3,9 +3,9 @@ title: "nexent本地环境搭建之WSL2"
 description: "在 WSL2 中搭建 Nexent 开发环境，记录依赖安装、服务启动和环境配置中的问题。"
 date: "2025-11-01T16:06:12.000Z"
 updated: "2025-12-25T06:36:15.904Z"
-tags: ["学习记录"]
-category: "Nexent"
 topic: "工程实践"
+categories: ["Nexent"]
+tags: ["Nexent","WSL2","环境搭建"]
 ---
 
 ## 后端环境搭建
