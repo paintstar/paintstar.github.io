@@ -416,7 +416,7 @@ kbd {
   clip-path: inset(50%);
   white-space: nowrap;
 }
-#notes-title {
+[data-browser-heading] {
   scroll-margin-top: 28px;
 }
 .pagination {

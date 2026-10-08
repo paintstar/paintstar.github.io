@@ -51,7 +51,7 @@ const { page, featured } = Astro.props;
       <div class="section-heading">
         <div>
           <p class="eyebrow">ARTICLES</p>
-          <h2 id="notes-title">
+          <h2 id="notes-title" data-browser-heading>
             <span data-browser-title>文章</span><span class="article-count mono" data-browser-count>{String(page.total).padStart(2, '0')}</span>
           </h2>
         </div>

@@ -17,7 +17,7 @@ const { posts, startIndex = 0, interactive = false, currentPage = 1 } = Astro.pr
       class="post-row"
       data-topic={interactive ? post.data.topic : undefined}
       data-categories={interactive ? JSON.stringify(postCategories(post)) : undefined}
-      hidden={interactive && Math.floor(index / site.pageSize) + 1 !== currentPage}
+      hidden={interactive && Math.floor((startIndex + index) / site.pageSize) + 1 !== currentPage}
     >
       <span class="post-number mono" aria-hidden="true">
         {String(startIndex + index + 1).padStart(2, '0')}

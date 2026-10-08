@@ -8,14 +8,16 @@ if (browser) {
     categories: JSON.parse(element.dataset.categories!) as string[],
   }));
   const pageSize = Number(browser.dataset.pageSize);
-  const home = new URL(browser.dataset.homeUrl!, location.origin);
+  const base = new URL(browser.dataset.baseUrl!, location.origin);
+  const initialTopic = browser.dataset.initialTopic ?? '';
+  const initialCategory = browser.dataset.initialCategory ?? '';
   const results = browser.querySelector<HTMLElement>('[data-article-results]')!;
   const pagination = browser.querySelector<HTMLElement>('[data-browser-pagination]')!;
   const paginationStatus = pagination.querySelector<HTMLElement>('.pagination-status')!;
   const paginationLinks = pagination.querySelector<HTMLElement>('.pagination-links')!;
   const topics = new Set(rows.map((row) => row.topic));
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const heading = document.querySelector<HTMLElement>('#notes-title')!;
+  const heading = document.querySelector<HTMLElement>('[data-browser-heading]')!;
   heading.tabIndex = -1;
 
   function normalize(state: BrowserState): BrowserState {
@@ -30,20 +32,20 @@ if (browser) {
 
   function readState(): BrowserState {
     const query = new URLSearchParams(location.search);
-    const relativePath = location.pathname.slice(home.pathname.length);
+    const relativePath = location.pathname.slice(base.pathname.length);
     const pathPage = relativePath.match(/^page\/(\d+)\/?$/)?.[1];
     return normalize({
-      topic: query.get('topic') ?? '',
-      category: query.get('category') ?? '',
+      topic: query.get('topic') ?? initialTopic,
+      category: query.get('category') ?? initialCategory,
       page: Number(query.get('page') ?? pathPage ?? 1),
     });
   }
 
   function stateUrl(next: BrowserState) {
-    const address = new URL(home);
-    if (next.topic) {
-      address.searchParams.set('topic', next.topic);
-      if (next.category) address.searchParams.set('category', next.category);
+    const address = new URL(base);
+    if (next.topic !== initialTopic || next.category !== initialCategory) {
+      if (next.topic !== initialTopic) address.searchParams.set('topic', next.topic);
+      if (next.category !== initialCategory) address.searchParams.set('category', next.category);
       if (next.page > 1) address.searchParams.set('page', String(next.page));
     } else if (next.page > 1) {
       address.pathname += `page/${next.page}/`;
@@ -83,10 +85,16 @@ if (browser) {
     );
     const start = (state.page - 1) * pageSize;
     const pageCount = Math.max(1, Math.ceil(matches.length / pageSize));
+    browser!.querySelector<HTMLElement>('[data-browser-empty]')!.hidden = matches.length > 0;
     rows.forEach((row) => { row.element.hidden = true; });
     matches.forEach((row, index) => {
       row.element.hidden = index < start || index >= start + pageSize;
       row.element.querySelector<HTMLElement>('.post-number')!.textContent = String(index + 1).padStart(2, '0');
+    });
+    browser!.querySelectorAll<HTMLElement>('[data-browser-year]').forEach((group) => {
+      const count = group.querySelectorAll('.post-row:not([hidden])').length;
+      group.hidden = count === 0;
+      group.querySelector<HTMLElement>('[data-browser-year-count]')!.textContent = `本页 ${count} 篇`;
     });
     browser!.querySelectorAll<HTMLButtonElement>('button[data-topic-filter]').forEach((button) => {
       button.setAttribute('aria-pressed', String(button.dataset.topicFilter === state.topic));
@@ -97,7 +105,7 @@ if (browser) {
         button.setAttribute('aria-pressed', String(button.dataset.subcategoryFilter === state.category));
       });
     });
-    document.querySelector<HTMLElement>('[data-browser-title]')!.textContent = state.category || state.topic || '文章';
+    document.querySelector<HTMLElement>('[data-browser-title]')!.textContent = state.category || state.topic || browser!.dataset.defaultTitle!;
     document.querySelector<HTMLElement>('[data-browser-count]')!.textContent = String(matches.length).padStart(2, '0');
     browser!.querySelector<HTMLElement>('[data-browser-status]')!.textContent =
       `${state.category || state.topic || '全部文章'}，共 ${matches.length} 篇，第 ${state.page} / ${pageCount} 页。`;
@@ -128,12 +136,14 @@ if (browser) {
     }
   }
 
-  browser.addEventListener('click', (event) => {
+  function handleClick(event: MouseEvent) {
     if (!(event.target instanceof Element) || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    const control = event.target.closest<HTMLElement>('[data-topic-filter], [data-subcategory-filter], [data-browser-page]');
+    const control = event.target.closest<HTMLElement>('[data-topic-filter], [data-subcategory-filter], [data-browser-page], [data-browser-reset]');
     if (!control) return;
     event.preventDefault();
-    const next = normalize(control.hasAttribute('data-topic-filter')
+    const next = normalize(control.hasAttribute('data-browser-reset')
+      ? { topic: '', category: '', page: 1 }
+      : control.hasAttribute('data-topic-filter')
       ? { topic: control.dataset.topicFilter!, category: '', page: 1 }
       : control.hasAttribute('data-subcategory-filter')
         ? { ...state, category: control.dataset.subcategoryFilter!, page: 1 }
@@ -146,7 +156,12 @@ if (browser) {
       heading.focus({ preventScroll: true });
       heading.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });
     }
-  });
+  }
+  browser.addEventListener('click', handleClick);
+  // The archive's "all articles" control resets its filters in place.
+  if (base.pathname === `${import.meta.env.BASE_URL}archives/`) {
+    document.querySelector<HTMLElement>('[data-browser-reset]')?.addEventListener('click', handleClick);
+  }
   addEventListener('popstate', () => {
     state = readState();
     render(true);

@@ -1,10 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import PostList from './PostList.astro';
-import Pagination from './Pagination.astro';
-import TopicNav from './TopicNav.astro';
+import ArticleBrowser from './ArticleBrowser.astro';
 import CollectionTrail from './CollectionTrail.astro';
-import { dateLabel, url } from '../lib/posts';
+import { url } from '../lib/posts';
 import { type PostPage } from '../lib/pagination';
 interface Props {
   page: PostPage;
@@ -13,9 +11,6 @@ interface Props {
   category?: string;
 }
 const { page, title = '文章归档', description, category } = Astro.props;
-const { posts } = page;
-const yearOf = (post: (typeof posts)[number]) => dateLabel(post.data.date).slice(0, 4);
-const years = [...new Set(posts.map(yearOf))];
 const parent = page.basePath.startsWith('tags/')
   ? { title: '标签', path: 'tags/' }
   : page.basePath.startsWith('categories/')
@@ -28,33 +23,17 @@ const parent = page.basePath.startsWith('tags/')
     <CollectionTrail title={title} parent={parent} />
     <header class="page-heading">
       <p class="eyebrow">THE NOTEBOOK / ARCHIVE</p>
-      <h1>
-        {title}
-        <span class="article-count mono">{page.total}</span>
+      <h1 data-browser-heading>
+        <span data-browser-title>{title}</span>
+        <span class="article-count mono" data-browser-count>{page.total}</span>
       </h1>
       {description && <p>{description}</p>}
       <div class="archive-tools">
-        <a href={url('archives/')}>全部文章</a>
+        <a href={url('archives/')} data-browser-reset>全部文章</a>
         <a href={url('tags/')}>按标签</a>
         <a href={url('categories/')}>按分类</a>
       </div>
     </header>
-    <TopicNav current={category ?? (title === '文章归档' ? undefined : title)} />
-    {years.map((year) => (
-      <section class="archive-year">
-        <div class="year-heading">
-          <h2 class="mono">{year}</h2>
-          <span>
-            本页 {posts.filter((post) => yearOf(post) === year).length} 篇
-          </span>
-        </div>
-        <PostList
-          posts={posts.filter((post) => yearOf(post) === year)}
-          startIndex={page.startIndex + posts.findIndex((post) => yearOf(post) === year)}
-        />
-      </section>
-    ))}
-    {!posts.length && <p class="empty-note">这里还没有笔记。</p>}
-    <Pagination page={page} />
+    <ArticleBrowser page={page} groupByYear current={category} title={title} />
   </div>
 </Base>

@@ -3,6 +3,7 @@ import { url, type Post } from './posts';
 
 export interface PostPage {
   posts: Post[];
+  collection: Post[];
   total: number;
   currentPage: number;
   pageCount: number;
@@ -21,6 +22,7 @@ export function postPages(posts: Post[], basePath: string): PostPage[] {
   const pageCount = Math.max(1, Math.ceil(posts.length / site.pageSize));
   return Array.from({ length: pageCount }, (_, index) => ({
     posts: posts.slice(index * site.pageSize, (index + 1) * site.pageSize),
+    collection: posts,
     total: posts.length,
     currentPage: index + 1,
     pageCount,

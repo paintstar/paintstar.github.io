@@ -2,20 +2,42 @@
 import PostList from './PostList.astro';
 import Pagination from './Pagination.astro';
 import TopicNav from './TopicNav.astro';
-import { allPosts, url } from '../lib/posts';
+import { dateLabel, postCategories, postTopics, url } from '../lib/posts';
 import { type PostPage } from '../lib/pagination';
 import { site } from '../site.mjs';
 interface Props {
   page: PostPage;
+  groupByYear?: boolean;
+  current?: string;
+  title?: string;
 }
-const { page } = Astro.props;
-const posts = await allPosts();
+const { page, groupByYear = false, current, title = '文章' } = Astro.props;
+const posts = page.collection;
+const topics = postTopics(posts);
+const matchingTopics = [...new Set(posts.filter((post) => postCategories(post).includes(current ?? '')).map((post) => post.data.topic))];
+const initialTopic = topics.includes(current ?? '') ? current : matchingTopics.length === 1 ? matchingTopics[0] : '';
+const initialCategory = current && current !== initialTopic ? current : '';
+const yearOf = (post: (typeof posts)[number]) => dateLabel(post.data.date).slice(0, 4);
+const years = [...new Set(posts.map(yearOf))];
 ---
 
-<div class="article-browser" data-article-browser data-page-size={site.pageSize} data-home-url={url()}>
-  <TopicNav interactive />
+<div class="article-browser" data-article-browser data-page-size={site.pageSize} data-base-url={url(page.basePath)} data-default-title={title} data-initial-topic={initialTopic} data-initial-category={initialCategory}>
+  <TopicNav posts={posts} current={current} interactive />
   <div class="article-results" id="article-results" data-article-results>
-    <PostList posts={posts} interactive currentPage={page.currentPage} />
+    {groupByYear ? years.map((year) => {
+      const yearPosts = posts.filter((post) => yearOf(post) === year);
+      const visibleCount = page.posts.filter((post) => yearOf(post) === year).length;
+      return (
+        <section class="archive-year" data-browser-year={year} hidden={visibleCount === 0}>
+          <div class="year-heading">
+            <h2 class="mono">{year}</h2>
+            <span data-browser-year-count>本页 {visibleCount} 篇</span>
+          </div>
+          <PostList posts={yearPosts} startIndex={posts.findIndex((post) => yearOf(post) === year)} interactive currentPage={page.currentPage} />
+        </section>
+      );
+    }) : <PostList posts={posts} interactive currentPage={page.currentPage} />}
+    <p class="empty-note" data-browser-empty hidden={posts.length > 0}>这里还没有文章。</p>
     <Pagination page={page} interactive />
   </div>
   <p class="browser-status" role="status" aria-live="polite" aria-atomic="true" data-browser-status></p>
