@@ -1,10 +1,10 @@
 ---
 import Archive from '../../components/Archive.astro';
-import { allPosts } from '../../lib/posts';
+import { allPosts, tagSlug } from '../../lib/posts';
 export async function getStaticPaths() {
   const posts = await allPosts();
   return [...new Set(posts.flatMap((post) => post.data.tags))].map((tag) => ({
-    params: { tag },
+    params: { tag: tagSlug(tag) },
     props: { tag, posts: posts.filter((post) => post.data.tags.includes(tag)) },
   }));
 }

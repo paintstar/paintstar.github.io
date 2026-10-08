@@ -10,6 +10,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "cheerio": "1.2.0",
+    "turndown": "7.2.4",
+    "turndown-plugin-gfm": "1.0.2",
     "typescript": "6.0.3"
   },
   "name": "shin-notes",
@@ -20,7 +23,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "import:csdn": "node scripts/import-csdn.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

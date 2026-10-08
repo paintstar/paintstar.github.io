@@ -7,7 +7,8 @@ export const url = (path = '') =>
 export const postUrl = (post: Post) => url(`posts/${post.id}/`);
 export const dateLabel = (date: Date) =>
   new Intl.DateTimeFormat('sv-SE', { timeZone: site.timezone }).format(date);
-export const categorySlug = (name: string) => name.replace(/\s+/g, '-');
+export const categorySlug = (name: string) => name.replace(/[\\/\s]+/g, '-');
+export const tagSlug = categorySlug;
 export const readingTime = (post: Post) => {
   const text = (post.body ?? '').replace(/```[\s\S]*?```/g, '').replace(/https?:\/\/\S+/g, '');
   const characters = text.match(/[\u3400-\u9fff]/g)?.length ?? 0;

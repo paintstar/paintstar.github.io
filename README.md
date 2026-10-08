@@ -46,6 +46,12 @@ $$
 
 项目介绍集中保存在 `src/content/projects.json`，修改名称、简介、功能、技术栈或 GitHub 链接后，项目页同步更新。随记在 `src/content/notes.json`。
 
+## 从 CSDN 导入文章
+
+运行 `npm run import:csdn -- 文章列表网址` 可导入该作者列表中公开可读取的文章。需要系统提供 `curl`。导入会保留原始发布时间、修改时间、标题、标签、代码和公式，将配图保存到 `public/images/posts/`，并更新作者文章之间的链接。已有 Markdown 文件不会覆盖。
+
+缓存与进度保存在 `output/csdn-import/`，不提交到仓库。重新运行命令可利用已下载内容继续导入；如果 CSDN 对请求头有限制，可通过 `CSDN_USER_AGENT` 设置浏览器请求头。导入完成后运行 `npm run build` 检查生成结果。
+
 ## 发布到 GitHub Pages
 
 仓库 Settings → Pages → Build and deployment 的 Source 选择 **GitHub Actions**。提交到默认分支后，`.github/workflows/deploy.yml` 自动构建并发布 `dist/`；也可以在 Actions 手动运行。无需安装或配置 Hexo。不要把 `dist/` 或 `node_modules/` 提交到仓库。
