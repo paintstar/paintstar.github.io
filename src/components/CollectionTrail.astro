@@ -1,0 +1,21 @@
+---
+import { url } from '../lib/posts';
+interface Props {
+  title: string;
+  parent?: { title: string; path: string };
+}
+const { title, parent } = Astro.props;
+---
+
+<div class="collection-trail">
+  <a class="collection-back" href={url(parent?.path ?? '')} data-return-link>
+    ← 返回{parent?.title ?? '文章'}
+  </a>
+  <nav class="breadcrumbs" aria-label="当前位置">
+    <ol>
+      <li><a href={url()}>文章</a></li>
+      {parent && <li><a href={url(parent.path)}>{parent.title}</a></li>}
+      <li><span aria-current="page">{title}</span></li>
+    </ol>
+  </nav>
+</div>

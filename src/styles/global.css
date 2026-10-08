@@ -553,6 +553,39 @@ kbd {
 .page-heading {
   margin-bottom: 45px;
 }
+.collection-trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 30px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.collection-back:hover,
+.breadcrumbs a:hover {
+  color: var(--accent);
+}
+.breadcrumbs {
+  min-width: 0;
+}
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.breadcrumbs li + li::before {
+  content: '/';
+  padding-right: 8px;
+  color: var(--soft);
+}
+.breadcrumbs [aria-current='page'] {
+  color: var(--soft);
+}
 .page-heading h1 {
   font: 500 38px/1.6 var(--serif);
   letter-spacing: 0.5px;

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import CollectionTrail from '../../components/CollectionTrail.astro';
 import { allPosts, tagSlug, url } from '../../lib/posts';
 const posts = await allPosts();
 const tags = [...new Set(posts.flatMap((post) => post.data.tags))]
@@ -9,6 +10,7 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))]
 
 <Base title="标签">
   <div class="shell page-shell">
+    <CollectionTrail title="标签" />
     <header class="page-heading">
       <p class="eyebrow">THE NOTEBOOK / TOPICS</p>
       <h1>标签</h1>

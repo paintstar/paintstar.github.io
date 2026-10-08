@@ -40,6 +40,27 @@ document.addEventListener('keydown', (event) => {
 });
 updateTheme();
 
+// Keep the hierarchy links usable on direct visits and without JavaScript.
+// A visit from another page on this site can also return to its original scroll position.
+if (document.referrer && history.length > 1) {
+  const previous = new URL(document.referrer);
+  if (
+    previous.origin === location.origin &&
+    previous.pathname.startsWith(import.meta.env.BASE_URL) &&
+    previous.pathname !== location.pathname
+  ) {
+    document.querySelectorAll<HTMLAnchorElement>('[data-return-link]').forEach((link) => {
+      link.href = previous.href;
+      link.textContent = '← 返回上一页';
+      link.addEventListener('click', (event) => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        history.back();
+      });
+    });
+  }
+}
+
 const dialog = document.querySelector<HTMLDialogElement>('#search-dialog');
 const input = document.querySelector<HTMLInputElement>('#search-input');
 const results = document.querySelector<HTMLDivElement>('#search-results');

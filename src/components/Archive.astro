@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PostList from './PostList.astro';
 import Pagination from './Pagination.astro';
 import TopicNav from './TopicNav.astro';
+import CollectionTrail from './CollectionTrail.astro';
 import { dateLabel, url } from '../lib/posts';
 import { type PostPage } from '../lib/pagination';
 interface Props {
@@ -15,10 +16,16 @@ const { page, title = '文章归档', description, category } = Astro.props;
 const { posts } = page;
 const yearOf = (post: (typeof posts)[number]) => dateLabel(post.data.date).slice(0, 4);
 const years = [...new Set(posts.map(yearOf))];
+const parent = page.basePath.startsWith('tags/')
+  ? { title: '标签', path: 'tags/' }
+  : page.basePath.startsWith('categories/')
+    ? { title: '分类', path: 'categories/' }
+    : page.basePath === 'archives/' ? undefined : { title: '归档', path: 'archives/' };
 ---
 
 <Base title={`${title}${page.currentPage > 1 ? ` · 第 ${page.currentPage} 页` : ''}`}>
   <div class="shell page-shell">
+    <CollectionTrail title={title} parent={parent} />
     <header class="page-heading">
       <p class="eyebrow">THE NOTEBOOK / ARCHIVE</p>
       <h1>

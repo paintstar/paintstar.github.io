@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import CollectionTrail from '../../components/CollectionTrail.astro';
 import { allPosts, categoryUrl, postCategories, postTopics } from '../../lib/posts';
 const posts = await allPosts();
 const topics = postTopics(posts);
@@ -11,6 +12,7 @@ const categories = [...new Set(posts.flatMap(postCategories))].sort((a, b) => {
 
 <Base title="分类">
   <div class="shell page-shell">
+    <CollectionTrail title="分类" />
     <header class="page-heading">
       <p class="eyebrow">THE NOTEBOOK / COLLECTIONS</p>
       <h1>分类</h1>
