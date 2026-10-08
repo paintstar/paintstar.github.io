@@ -2,35 +2,58 @@
 import { allPosts, categoryUrl, postCategories, postTopics, url } from '../lib/posts';
 interface Props {
   current?: string;
+  interactive?: boolean;
 }
-const { current } = Astro.props;
+const { current, interactive = false } = Astro.props;
 const posts = await allPosts();
 const topics = postTopics(posts);
 const matchingTopics = [...new Set(posts.filter((post) => postCategories(post).includes(current ?? '')).map((post) => post.data.topic))];
 const currentTopic = topics.includes(current ?? '') ? current : matchingTopics.length === 1 ? matchingTopics[0] : undefined;
-const topicPosts = posts.filter((post) => post.data.topic === currentTopic);
-const subcategories = [...new Set(topicPosts.flatMap((post) => post.data.categories))];
+const filters = [
+  { name: '', title: '全部', count: posts.length, href: url() },
+  ...topics.map((topic) => ({
+    name: topic, title: topic, count: posts.filter((post) => post.data.topic === topic).length, href: categoryUrl(topic),
+  })),
+];
+const groups = (interactive ? topics : currentTopic ? [currentTopic] : []).map((topic) => {
+  const topicPosts = posts.filter((post) => post.data.topic === topic);
+  const categories = [...new Set(topicPosts.flatMap((post) => post.data.categories))];
+  return {
+    topic,
+    categories,
+    filters: [
+      { name: '', title: `全部${topic}`, count: topicPosts.length, href: categoryUrl(topic) },
+      ...categories.map((category) => ({
+        name: category, title: category,
+        count: topicPosts.filter((post) => post.data.categories.includes(category)).length,
+        href: categoryUrl(category),
+      })),
+    ],
+  };
+}).filter((group) => group.categories.length > 0);
 ---
 
 <nav class="topic-filters" aria-label="文章栏目">
-  <a href={url()} aria-current={!current ? 'page' : undefined}>
-    全部 <span class="mono">{posts.length}</span>
-  </a>
-  {topics.map((topic) => (
-    <a href={categoryUrl(topic)} class:list={{ selected: currentTopic === topic }} aria-current={current === topic ? 'page' : undefined}>
-      {topic} <span class="mono">{posts.filter((post) => post.data.topic === topic).length}</span>
+  {filters.map((filter) => interactive ? (
+    <button type="button" data-topic-filter={filter.name} aria-pressed={filter.name === (current ?? '') ? 'true' : 'false'} aria-controls="article-results">
+      {filter.title} <span class="mono">{filter.count}</span>
+    </button>
+  ) : (
+    <a href={filter.href} class:list={{ selected: filter.name && currentTopic === filter.name }} aria-current={filter.name === (current ?? '') ? 'page' : undefined}>
+      {filter.title} <span class="mono">{filter.count}</span>
     </a>
   ))}
 </nav>
-{currentTopic && subcategories.length > 0 && (
-  <nav class="topic-filters subcategory-filters" aria-label={`${currentTopic}的分类`}>
-    <a href={categoryUrl(currentTopic)} aria-current={current === currentTopic ? 'page' : undefined}>
-      全部{currentTopic} <span class="mono">{topicPosts.length}</span>
-    </a>
-    {subcategories.map((category) => (
-      <a href={categoryUrl(category)} aria-current={current === category ? 'page' : undefined}>
-        {category} <span class="mono">{topicPosts.filter((post) => post.data.categories.includes(category)).length}</span>
+{groups.map((group) => (
+  <nav class="topic-filters subcategory-filters" aria-label={`${group.topic}的分类`} data-topic-subcategories={interactive ? group.topic : undefined} hidden={interactive && group.topic !== currentTopic}>
+    {group.filters.map((filter) => interactive ? (
+      <button type="button" data-subcategory-filter={filter.name} aria-pressed={filter.name === '' ? 'true' : 'false'} aria-controls="article-results">
+        {filter.title} <span class="mono">{filter.count}</span>
+      </button>
+    ) : (
+      <a href={filter.href} aria-current={current === (filter.name || group.topic) ? 'page' : undefined}>
+        {filter.title} <span class="mono">{filter.count}</span>
       </a>
     ))}
   </nav>
-)}
+))}

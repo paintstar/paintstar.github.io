@@ -39,7 +39,7 @@ $$
 
 `topic` 是文章的主栏目，也会出现在分类页。`categories` 是可选的附加分类，一篇文章可以属于多个分类。题解统一使用 `topic: '算法题目'`；leetcode 题解再添加 `categories: ['leetcode']`，ICPC 真题添加 `categories: ['ICPC']`。算法原理放在“算法基础”，语言基础和命令练习放在“学习记录”，配置、开发与排错放在“工程实践”。标签描述来源和技术，例如 `ICPC`、`dp`、`算法题`，不要将文章标题当作标签。
 
-其他可选字段：`updated` 是修改时间，`featured: true` 将文章显示在首页精选位置，`draft: true` 隐藏草稿。栏目及分类计数从完整文章库生成，再按 `src/site.mjs` 的 `pageSize` 分页，默认每页 10 篇。首页、归档、年份、月份、分类和标签文章列表都支持分页；序号在当前文章集合中从 01 开始，翻页后连续编号。首页精选的向量图可以在 `src/components/Rotation.astro` 修改。
+其他可选字段：`updated` 是修改时间，`featured: true` 将文章显示在首页精选位置，`draft: true` 隐藏草稿。栏目及分类计数从完整文章库生成，再按 `src/site.mjs` 的 `pageSize` 分页，默认每页 10 篇。首页栏目、附加分类和分页在文章列表内切换，当前选择记录在网址中，刷新及浏览器前进、后退可以恢复。归档、年份、月份、分类和标签也有独立的静态分页页面；序号在当前文章集合中从 01 开始，翻页后连续编号。首页精选的向量图可以在 `src/components/Rotation.astro` 修改。
 
 文章图片放在 `public/images/`，Markdown 使用 `/images/文件名.png`。代码块注明语言，例如 `python`、`cpp`、`bash`。文章目录、阅读时间、标签页、归档、RSS、搜索索引和 sitemap 自动生成。公式包含语法错误时会中止构建，避免带着坏公式发布。
 

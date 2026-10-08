@@ -1,22 +1,30 @@
 ---
-import { categoryUrl, dateLabel, postUrl, readingTime, type Post } from '../lib/posts';
+import { categoryUrl, dateLabel, postCategories, postUrl, readingTime, type Post } from '../lib/posts';
+import { site } from '../site.mjs';
 import Icon from './Icon.astro';
 interface Props {
   posts: Post[];
   startIndex?: number;
+  interactive?: boolean;
+  currentPage?: number;
 }
-const { posts, startIndex = 0 } = Astro.props;
+const { posts, startIndex = 0, interactive = false, currentPage = 1 } = Astro.props;
 ---
 
 <div class="post-list">
   {posts.map((post, index) => (
-    <article class="post-row">
+    <article
+      class="post-row"
+      data-topic={interactive ? post.data.topic : undefined}
+      data-categories={interactive ? JSON.stringify(postCategories(post)) : undefined}
+      hidden={interactive && Math.floor(index / site.pageSize) + 1 !== currentPage}
+    >
       <span class="post-number mono" aria-hidden="true">
         {String(startIndex + index + 1).padStart(2, '0')}
       </span>
       <div class="post-summary">
         <div class="post-meta">
-          <a class="topic-label" href={categoryUrl(post.data.topic)}>{post.data.topic}</a>
+          <a class="topic-label" href={categoryUrl(post.data.topic)} data-topic-filter={interactive ? post.data.topic : undefined}>{post.data.topic}</a>
           <span class="meta-separator">/</span>
           <time datetime={post.data.date.toISOString()}>{dateLabel(post.data.date)}</time>
         </div>

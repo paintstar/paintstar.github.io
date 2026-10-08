@@ -1,11 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import PostList from './PostList.astro';
+import ArticleBrowser from './ArticleBrowser.astro';
 import Icon from './Icon.astro';
 import Rotation from './Rotation.astro';
 import { dateLabel, postUrl, readingTime, url, type Post } from '../lib/posts';
-import Pagination from './Pagination.astro';
-import TopicNav from './TopicNav.astro';
 import { type PostPage } from '../lib/pagination';
 interface Props { page: PostPage; featured?: Post; }
 const { page, featured } = Astro.props;
@@ -54,16 +52,14 @@ const { page, featured } = Astro.props;
         <div>
           <p class="eyebrow">ARTICLES</p>
           <h2 id="notes-title">
-            文章<span class="article-count mono">{String(page.total).padStart(2, '0')}</span>
+            <span data-browser-title>文章</span><span class="article-count mono" data-browser-count>{String(page.total).padStart(2, '0')}</span>
           </h2>
         </div>
         <a class="text-link muted" href={url('archives/')}>
-          全部文章 <Icon name="arrow" />
+          归档 <Icon name="arrow" />
         </a>
       </div>
-      <TopicNav />
-      <PostList posts={page.posts} startIndex={page.startIndex} />
-      <Pagination page={page} />
+      <ArticleBrowser page={page} />
       <a class="archive-cta" href={url('archives/')}>
         <span>{page.total} 篇文章</span>
         <span class="text-link">

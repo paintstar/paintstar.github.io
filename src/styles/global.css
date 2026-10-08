@@ -372,7 +372,8 @@ kbd {
   gap: 8px;
   margin-bottom: 8px;
 }
-.topic-filters a {
+.topic-filters a,
+.topic-filters button {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -381,16 +382,19 @@ kbd {
   font-size: 11px;
   color: var(--muted);
 }
-.topic-filters a:hover {
+.topic-filters a:hover,
+.topic-filters button:hover {
   color: var(--ink);
   background: var(--surface);
 }
 .topic-filters a[aria-current='page'],
-.topic-filters a.selected {
+.topic-filters a.selected,
+.topic-filters button[aria-pressed='true'] {
   color: var(--accent);
   background: var(--accent-soft);
 }
-.topic-filters a span {
+.topic-filters a span,
+.topic-filters button span {
   opacity: 0.7;
   font-size: 10px;
 }
@@ -398,6 +402,22 @@ kbd {
   padding-top: 8px;
   margin-top: 12px;
   border-top: 1px solid var(--line);
+}
+.article-results {
+  overflow: clip;
+}
+.browser-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+#notes-title {
+  scroll-margin-top: 28px;
 }
 .pagination {
   display: flex;
@@ -926,7 +946,8 @@ kbd {
   .topic-filters {
     gap: 3px;
   }
-  .topic-filters a {
+  .topic-filters a,
+  .topic-filters button {
     padding: 7px 9px;
   }
   .pagination {
